@@ -56,8 +56,8 @@ export default function App() {
       <p className="description">
         A collaborative Rich Text editing experience (similar to Google Docs)
         using <a href="https://github.com/YousefED/nostr-crdt">nostr-crdt</a>.
-        Edits can be synced to Nostr. Users can work offline and edits are
-        seamlessly synced when they reconnect to the Nostr.
+        Edits can be synced over the Nostr protocol as events. Users can work
+        offline and edits are seamlessly synced when they reconnect to Nostr.
       </p>
       <MenuBar editor={editor} />
       <div className="editor">

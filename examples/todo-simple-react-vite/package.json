@@ -19,7 +19,7 @@
     "eslint": "^7.11.0",
     "events": "3.3.0",
     "nostr-crdt": "^0.0.1",
-    "nostr-relaypool": "^0.4.9",
+    "nostr-tools": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.3",

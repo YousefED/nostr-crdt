@@ -1,6 +1,11 @@
 import { fromBase64, toBase64 } from "lib0/buffer";
-import { Event, NostrToolsEvent } from "nostr-relaypool/event";
-import { getEventHash, getPublicKey, Relay, signEvent } from "nostr-tools";
+import {
+  Event,
+  getEventHash,
+  getPublicKey,
+  Relay,
+  signEvent,
+} from "nostr-tools";
 import { event, lifecycle } from "vscode-lib";
 import * as Y from "yjs";
 import { NOSTR_CRDT_EVENT_TYPE } from "./constants";
@@ -41,7 +46,7 @@ export class NostrProvider extends lifecycle.Disposable {
   }
 
   private publishUpdate(update: Uint8Array) {
-    let event: NostrToolsEvent = {
+    let event: Event = {
       kind: NOSTR_CRDT_EVENT_TYPE,
       created_at: Math.floor(Date.now() / 1000),
       tags: [
