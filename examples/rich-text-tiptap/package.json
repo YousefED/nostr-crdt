@@ -29,8 +29,8 @@
     "yjs": "^13.5.16"
   },
   "devDependencies": {
-    "react-scripts": "5.0.0",
-    "eslint-config-react-app": "^6.0.0"
+    "eslint-config-react-app": "^6.0.0",
+    "react-scripts": "5.0.0"
   },
   "scripts": {
     "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
