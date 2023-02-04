@@ -3,3 +3,5 @@ Updates to the TODO list are saved as Nostr events.
 
 - [Open live demo](https://eks4u8.csb.app/) (via CodeSandbox)
 - [Edit code](https://codesandbox.io/s/github/YousefED/nostr-crdt/tree/main/examples/todo-simple-react?file=/src/App.tsx) (CodeSandbox)
+
+The [main code (App.tsx)](src/App.tsx) is only 60 lines :)

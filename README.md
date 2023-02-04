@@ -2,17 +2,15 @@
 
 [![npm version](https://badge.fury.io/js/nostr-crdt.svg)](https://badge.fury.io/js/nostr-crdt) [![Coverage Status](https://coveralls.io/repos/github/YousefED/nostr-crdt/badge.svg?branch=main)](https://coveralls.io/github/YousefED/nostr-crdt?branch=main)
 
-**nostr-crdt** is an experiment to run collaborative (multiplayer) apps over [nostr](https://github.com/nostr-protocol/). CRDT application updates are sent as Nostr events.
+**nostr-crdt** is an experiment to run decentralized, collaborative (multiplayer) apps over [nostr](https://github.com/nostr-protocol/). CRDT application updates are sent as Nostr events.
 
 The NostrProvider is a sync provider for [Yjs](https://github.com/yjs/yjs), a proven, high performance CRDT implementation.
 
 ## TL;DR
 
-Create apps like this:
+Create apps like this and run them over Nostr:
 
 ![screencapture](examples/rich-text-tiptap/richtext.gif)
-
-And connect [Nostr](https://github.com/nostr-protocol/) as transport + storage. Instead of social updates or chat messages, we send an event stream of data model updates (for the rich-text demo for example, these are _document edits_) to Nostr.
 
 ## Live demo
 
@@ -21,13 +19,17 @@ In the [examples](examples) directory, you'll find some live examples:
 - [Collaborative Todo list](examples/todo-simple-react)
 - [Collaborative rich text editing](examples/rich-text-tiptap)
 
-## Motivation
+## Summary of how it works
 
-[CRDTs](https://crdt.tech/) (_Conflict-free Replicated Data Types_) make it easy to build **decentralized**, **fast**, **collaborative** **local-first** applications.
+When using [CRDTs](https://crdt.tech/) (_Conflict-free Replicated Data Types_), you don't need to store "the current application state" in a central database. Instead, the state is derived from all updates that have been made.
 
-> Read more about [the benefits of Local-first software in this essay](https://www.inkandswitch.com/local-first.html)
+Nostr-crdt shares these updates using the [Nostr protocol](https://github.com/nostr-protocol/) as _events_. Instead of social updates or chat messages (main use-case for nostr), we send an event stream of data model updates (for the rich-text demo for example, updates are "rich-text document edits", for the TODO-list examples, updates are the creation or completion of todo items) over the Nostr protocol.
 
-When building local-first software on top of CRDTs, you probably still need a backend so users can access their data across devices and collaborate with each other.
+The main code to create a simple, collaborative TODO list on top of nostr-crdt is < 100 lines (see [App.tsx](examples/todo-simple-react/src/App.tsx)).
+
+An initial event is created to define a "room" (like a document or todo-list). Updates to this room are sent by creating nostr events with an `#e` tag to the initial event id (room id).
+
+Updates could be spread across relays, or stored locally in clients and synced at a later moment.
 
 # Usage
 
@@ -52,9 +54,10 @@ const key = generatePrivateKey();
 const ydoc = new Y.Doc();
 
 // Send a first event using Nostr to create a new "room"
+// (not necessary when joining an existing room)
 const roomId = await createNostrCRDTRoom(doc, nostrClient, key, "demo");
 
-// Create a new Y.Doc and connect the NostrProvider
+// Create and connect the NostrProvider to the Y.Doc
 const nostrProprovidervider = new NostrProvider(
   doc,
   client,
@@ -76,3 +79,20 @@ yarray.observe((event) => {
 // add 1 to the sum
 yarray.push([1]); // => "new sum: 1"
 ```
+
+# Local-first
+
+Note that you don't _need_ to have a connection to a Relay for the demo apps to work. With nostr-crdt you can build local-first apps, and sync over nostr as soon as you're back online.
+
+> Read more about [the benefits of Local-first software in this essay](https://www.inkandswitch.com/local-first.html)
+
+# Future work
+
+The current state is a proof of concept to gather community feedback. Brainstorm of future work necessary:
+
+- a NIP for events (we now use kind=9001)
+- periodic snapshots of events
+- how to handle long-term storage, do we need specific relays / NIPs for this?
+- design for access control (who can collaborate on the same "document" / room)
+- send presence / cursor info as ephemeral events
+- buffer stored events every x seconds, and send "live" data as ephemeral events to reduce network load
