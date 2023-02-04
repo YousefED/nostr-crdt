@@ -1,0 +1,60 @@
+{
+  "name": "nostr-crdt",
+  "description": "",
+  "homepage": "https://github.com/YousefED/nostr-crdt",
+  "author": {
+    "name": "Yousef El-Dardiry"
+  },
+  "type": "module",
+  "version": "0.2.0",
+  "private": false,
+  "license": "MPL-2.0",
+  "dependencies": {
+    "vscode-lib": "^0.1.0",
+    "websocket-polyfill": "^0.0.3"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.4",
+    "@types/qs": "^6.9.7",
+    "@vitest/coverage-c8": "^0.28.3",
+    "c8": "^7.12.0",
+    "cross-fetch": "^3.1.4",
+    "got": "^11.8.2",
+    "jest-environment-jsdom": "^28.1.3",
+    "lib0": "^0.2.42",
+    "nostr-relaypool": "^0.4.9",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.4.4",
+    "vite": "^4.1.1",
+    "vitest": "^0.28.3",
+    "ws": "^8.12.0",
+    "y-protocols": "^1.0.5",
+    "yjs": "^13.5.16",
+    "isomorphic-ws": "^5.0.0"
+  },
+  "peerDependencies": {
+    "lib0": "*",
+    "y-protocols": "*",
+    "yjs": "*"
+  },
+  "files": [
+    "/dist",
+    "/types"
+  ],
+  "source": "src/index.ts",
+  "types": "types/index.d.ts",
+  "main": "./dist/nostr-crdt.umd.cjs",
+  "module": "./dist/nostr-crdt.js",
+  "exports": {
+    ".": {
+      "import": "./dist/nostr-crdt.js",
+      "require": "./dist/nostr-crdt.umd.cjs"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist && rimraf types",
+    "build": "npm run clean && tsc && vite build",
+    "test": "vitest run --coverage",
+    "watch": "tsc --watch"
+  }
+}
