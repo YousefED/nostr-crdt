@@ -33,7 +33,8 @@
     "typescript": "^4.4.4",
     "url": "^0.11.0",
     "y-protocols": "^1.0.5",
-    "yjs": "^13.5.16"
+    "yjs": "^13.5.16",
+    "y-prosemirror": "1.0.20"
   },
   "devDependencies": {
     "eslint-config-react-app": "^6.0.0",
