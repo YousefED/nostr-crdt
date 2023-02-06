@@ -9,9 +9,13 @@ export default function LoginForm({
   setLoginData: (data: LoginData) => void;
   status: "loading" | "failed" | "ok";
 }) {
-  const [relay, setRelay] = useState("wss://nos.lol");
+  const params = Object.fromEntries(
+    new URLSearchParams((window.location.hash || "#").substring(1))
+  );
+
+  const [relay, setRelay] = useState(params.relay || "wss://nos.lol");
   const [privateKey, setPrivateKey] = useState(generatePrivateKey());
-  const [roomId, setRoomId] = useState("");
+  const [roomId, setRoomId] = useState(params.room || "");
 
   React.useEffect(() => {
     setLoginData({

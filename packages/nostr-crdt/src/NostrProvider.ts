@@ -74,6 +74,10 @@ export class NostrProvider extends lifecycle.Disposable {
       console.log("seen");
     });
   }
+
+  private pendingUpdates: Uint8Array[] = [];
+  private sendPendingTimeout: any;
+
   /**
    * Listener for changes to the Yjs document.
    * Forwards changes to Nostr if applicable
@@ -88,8 +92,17 @@ export class NostrProvider extends lifecycle.Disposable {
       return;
     }
 
-    this.publishUpdate(update);
-    // this.throttledWriter.writeUpdate(update);
+    this.pendingUpdates.push(update);
+
+    if (this.sendPendingTimeout) {
+      clearTimeout(this.sendPendingTimeout);
+    }
+
+    // buffer every 100ms
+    this.sendPendingTimeout = setTimeout(() => {
+      this.pendingUpdates = [];
+      this.publishUpdate(Y.mergeUpdatesV2(this.pendingUpdates));
+    }, 100);
   };
 
   private updateFromEvents = (events: Event[]) => {
@@ -116,11 +129,6 @@ export class NostrProvider extends lifecycle.Disposable {
 
     console.log(docBefore, "after", docAfter);
   };
-
-  // private async initializeNoCatch() {
-
-  //   this.initializedResolve();
-  // }
 
   public async initialize() {
     try {

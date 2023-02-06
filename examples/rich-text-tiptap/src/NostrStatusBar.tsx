@@ -59,6 +59,14 @@ export default function NostrStatusBar({ doc }: { doc: Y.Doc }) {
           "crdtdemo"
         );
       }
+      window.history.replaceState(
+        undefined,
+        "",
+        "#room=" +
+          encodeURIComponent(loginData.roomId!) +
+          "&relay=" +
+          encodeURIComponent(loginData.relay)
+      );
 
       console.log(loginData.roomId);
       // (optional) stored on state for easy disconnect + connect toggle
