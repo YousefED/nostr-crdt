@@ -10,7 +10,13 @@ import { LoginData } from "./login/utils";
 /**
  * The Top Bar of the app that contains the sign in button and status of the NostrProvider
  */
-export default function NostrStatusBar({ doc }: { doc: Y.Doc }) {
+export default function NostrStatusBar({
+  children,
+  doc,
+}: {
+  children: any;
+  doc: Y.Doc;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [nostrProvider, setNostrProvider] = useState<NostrProvider>();
   const [status, setStatus] = useState<
@@ -129,70 +135,73 @@ export default function NostrStatusBar({ doc }: { doc: Y.Doc }) {
   );
 
   return (
-    <Box textAlign={"right"}>
-      {/* TODO: add options to go offline / webrtc, snapshots etc */}
-      {status === undefined && (
-        <LoginButton
-          onLogin={onNewLoginInfo}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
-      )}
-      {client && (
-        <fieldset style={{ margin: 0, padding: 0, border: 0 }}>
-          <ChoiceInputField>
-            <ChoiceInputField.Label>Online</ChoiceInputField.Label>
-            <Radio
-              name="online"
-              value="true"
-              defaultChecked={true}
-              onChange={onConnectChange}
-            />
-          </ChoiceInputField>
-          <ChoiceInputField>
-            <ChoiceInputField.Label>
-              Offline (disable sync)
-            </ChoiceInputField.Label>
-            <Radio
-              name="online"
-              value="false"
-              defaultChecked={false}
-              onChange={onConnectChange}
-            />
-          </ChoiceInputField>
-        </fieldset>
-      )}
-      {status === "loading" && (
-        <Label variant="small" outline>
-          Connecting with Nostr…
-        </Label>
-      )}
-      {status === "disconnected" && (
-        <Label variant="small" outline>
-          Disconnected
-        </Label>
-      )}
-      {status === "ok" && (
-        <Label
-          variant="small"
-          outline
-          sx={{ borderColor: "success.emphasis", color: "success.fg" }}>
-          Connected with Nostr
-        </Label>
-      )}
-      {status === "failed" && (
-        <Label
-          variant="small"
-          outline
-          sx={{ borderColor: "danger.emphasis", color: "danger.fg" }}>
-          Failed to connect
-        </Label>
-      )}
-      {loginData?.roomId && (
-        <Label variant="small" outline>
-          Room id: {loginData.roomId}
-        </Label>
-      )}
-    </Box>
+    <>
+      <Box textAlign={"right"}>
+        {/* TODO: add options to go offline / webrtc, snapshots etc */}
+        {status === undefined && (
+          <LoginButton
+            onLogin={onNewLoginInfo}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+        )}
+        {client && (
+          <fieldset style={{ margin: 0, padding: 0, border: 0 }}>
+            <ChoiceInputField>
+              <ChoiceInputField.Label>Online</ChoiceInputField.Label>
+              <Radio
+                name="online"
+                value="true"
+                defaultChecked={true}
+                onChange={onConnectChange}
+              />
+            </ChoiceInputField>
+            <ChoiceInputField>
+              <ChoiceInputField.Label>
+                Offline (disable sync)
+              </ChoiceInputField.Label>
+              <Radio
+                name="online"
+                value="false"
+                defaultChecked={false}
+                onChange={onConnectChange}
+              />
+            </ChoiceInputField>
+          </fieldset>
+        )}
+        {status === "loading" && (
+          <Label variant="small" outline>
+            Connecting with Nostr…
+          </Label>
+        )}
+        {status === "disconnected" && (
+          <Label variant="small" outline>
+            Disconnected
+          </Label>
+        )}
+        {status === "ok" && (
+          <Label
+            variant="small"
+            outline
+            sx={{ borderColor: "success.emphasis", color: "success.fg" }}>
+            Connected with Nostr
+          </Label>
+        )}
+        {status === "failed" && (
+          <Label
+            variant="small"
+            outline
+            sx={{ borderColor: "danger.emphasis", color: "danger.fg" }}>
+            Failed to connect
+          </Label>
+        )}
+        {loginData?.roomId && (
+          <Label variant="small" outline>
+            Room id: {loginData.roomId}
+          </Label>
+        )}
+      </Box>
+      {status && children}
+    </>
   );
 }

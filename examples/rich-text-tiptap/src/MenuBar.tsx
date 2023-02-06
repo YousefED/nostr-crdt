@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
-import { Button } from "@primer/react";
 
 export const MenuBar = ({ editor }: any) => {
   if (!editor) {
@@ -8,7 +7,7 @@ export const MenuBar = ({ editor }: any) => {
 
   return (
     <>
-      <div>
+      <div style={{ marginTop: "20px" }}>
         <div className="BtnGroup">
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}

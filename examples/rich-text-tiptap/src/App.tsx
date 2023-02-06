@@ -47,11 +47,6 @@ export default function App() {
 
   return (
     <Box m={3} maxWidth={600} marginLeft={"auto"} marginRight={"auto"} p={3}>
-      {/* This is the top bar with Sign in button and Nostr status
-          It also takes care of hooking up the Y.Doc to Nostr.
-      */}
-      <NostrStatusBar doc={yDoc} />
-
       <Heading sx={{ mb: 2 }}>Rich text collaboration</Heading>
       <p className="description">
         A collaborative Rich Text editing experience (similar to Google Docs)
@@ -59,10 +54,16 @@ export default function App() {
         Edits can be synced over the Nostr protocol as events. Users can work
         offline and edits are seamlessly synced when they reconnect to Nostr.
       </p>
-      <MenuBar editor={editor} />
-      <div className="editor">
-        <EditorContent editor={editor} />
-      </div>
+
+      {/* This is the top bar with Sign in button and Nostr status
+          It also takes care of hooking up the Y.Doc to Nostr.
+      */}
+      <NostrStatusBar doc={yDoc}>
+        <MenuBar editor={editor} sx={{ marginTop: 2 }} />
+        <div className="editor">
+          <EditorContent editor={editor} />
+        </div>
+      </NostrStatusBar>
     </Box>
   );
 }

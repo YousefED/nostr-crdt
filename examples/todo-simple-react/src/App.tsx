@@ -13,46 +13,47 @@ export default function App() {
       {/* This is the top bar with Sign in button and Nostr status
           It also takes care of hooking up the Y.Doc to Nostr.
       */}
-      <NostrStatusBar doc={getYjsValue(state) as Y.Doc} />
 
       <Heading sx={{ mb: 2 }}>Todo items:</Heading>
 
-      <TextInput
-        block
-        placeholder="Enter a todo item and hit enter"
-        type="text"
-        name="todo"
-        sx={{ marginBottom: 2 }}
-        onKeyPress={(event: any) => {
-          if (event.key === "Enter" && event.target.value) {
-            const target = event.target as HTMLInputElement;
-            // Add a todo item using the text added in the textfield
-            state.todos.push({ completed: false, title: target.value });
-            target.value = "";
-          }
-        }}
-      />
+      <NostrStatusBar doc={getYjsValue(state) as Y.Doc}>
+        <TextInput
+          block
+          placeholder="Enter a todo item and hit enter"
+          type="text"
+          name="todo"
+          sx={{ marginBottom: 2, marginTop: 2 }}
+          onKeyPress={(event: any) => {
+            if (event.key === "Enter" && event.target.value) {
+              const target = event.target as HTMLInputElement;
+              // Add a todo item using the text added in the textfield
+              state.todos.push({ completed: false, title: target.value });
+              target.value = "";
+            }
+          }}
+        />
 
-      {state.todos.map((todo, i) => {
-        return (
-          <Box
-            as="form"
-            sx={{ display: "flex", alignItems: "center" }}
-            key={`cb-${i}`}>
-            <Checkbox
-              id={`cb-${i}`}
-              checked={todo.completed}
-              onChange={() => (todo.completed = !todo.completed)}
-            />
-            <Text
-              as="label"
-              htmlFor={`cb-${i}`}
-              sx={{ fontSize: 3, marginLeft: 1 }}>
-              {todo.title}
-            </Text>
-          </Box>
-        );
-      })}
+        {state.todos.map((todo, i) => {
+          return (
+            <Box
+              as="form"
+              sx={{ display: "flex", alignItems: "center" }}
+              key={`cb-${i}`}>
+              <Checkbox
+                id={`cb-${i}`}
+                checked={todo.completed}
+                onChange={() => (todo.completed = !todo.completed)}
+              />
+              <Text
+                as="label"
+                htmlFor={`cb-${i}`}
+                sx={{ fontSize: 3, marginLeft: 1 }}>
+                {todo.title}
+              </Text>
+            </Box>
+          );
+        })}
+      </NostrStatusBar>
     </Box>
   );
 }
