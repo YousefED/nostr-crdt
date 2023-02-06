@@ -100,7 +100,7 @@ export class NostrProvider extends lifecycle.Disposable {
 
     // buffer every 100ms
     this.sendPendingTimeout = setTimeout(() => {
-      this.publishUpdate(Y.mergeUpdatesV2(this.pendingUpdates));
+      this.publishUpdate(Y.mergeUpdates(this.pendingUpdates));
       this.pendingUpdates = [];
     }, 100);
   };
