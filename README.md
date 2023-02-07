@@ -11,6 +11,7 @@ The NostrProvider is a sync provider for [Yjs](https://github.com/yjs/yjs), a pr
 Create apps like this and run them over Nostr:
 
 ![screencapture](examples/rich-text-tiptap/richtext.gif)
+[Open live demo](https://nostr-crdt-yousefed.vercel.app)
 
 ## Live demo
 
