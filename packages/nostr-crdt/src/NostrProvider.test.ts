@@ -9,7 +9,7 @@ import { NostrProvider } from "./NostrProvider";
 const APP_NAMESPACE = "nostrcrdttest";
 // const relays = ["wss://nostr.bongbong.com"];
 // const relays = ["ws://localhost:8084"];
-const relays = ["wss://nos.lol"];
+const relays = ["wss://noster.online"];
 
 let _relayServer: InMemoryRelayServer;
 

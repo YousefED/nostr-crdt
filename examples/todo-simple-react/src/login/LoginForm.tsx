@@ -13,7 +13,7 @@ export default function LoginForm({
     new URLSearchParams((window.location.hash || "#").substring(1))
   );
 
-  const [relay, setRelay] = useState(params.relay || "wss://nos.lol");
+  const [relay, setRelay] = useState(params.relay || "wss://noster.online");
   const [privateKey, setPrivateKey] = useState(generatePrivateKey());
   const [roomId, setRoomId] = useState(params.room || "");
 
