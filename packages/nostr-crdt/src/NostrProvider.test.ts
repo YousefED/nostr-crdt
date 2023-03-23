@@ -13,7 +13,8 @@ const relays = ["wss://noster.online"];
 
 let _relayServer: InMemoryRelayServer;
 
-beforeAll(() => {
+beforeAll(async () => {
+  await _relayServer?.close();
   _relayServer = new InMemoryRelayServer(8084);
 });
 
