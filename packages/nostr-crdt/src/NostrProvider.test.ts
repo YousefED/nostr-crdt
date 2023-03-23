@@ -3,18 +3,18 @@ import { beforeAll, expect, it } from "vitest";
 import "websocket-polyfill";
 import * as Y from "yjs";
 import { createNostrCRDTRoom } from "./createNostrCRDTRoom";
-import { InMemoryRelayServer } from "./InMemoryRelayServer";
 import { NostrProvider } from "./NostrProvider";
 
 const APP_NAMESPACE = "nostrcrdttest";
 // const relays = ["wss://nostr.bongbong.com"];
 // const relays = ["ws://localhost:8084"];
-const relays = ["wss://nos.lol"];
+const relays = ["wss://noster.online"];
 
-let _relayServer: InMemoryRelayServer;
+// let _relayServer: InMemoryRelayServer;
 
-beforeAll(() => {
-  _relayServer = new InMemoryRelayServer(8084);
+beforeAll(async () => {
+  // await _relayServer?.close();
+  // _relayServer = new InMemoryRelayServer(8084);
 });
 
 async function getRoomAndTwoUsers() {

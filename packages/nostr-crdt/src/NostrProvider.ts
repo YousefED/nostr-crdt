@@ -5,6 +5,7 @@ import {
   getPublicKey,
   Relay,
   signEvent,
+  UnsignedEvent,
 } from "nostr-tools";
 import { event, lifecycle } from "vscode-lib";
 import * as Y from "yjs";
@@ -46,7 +47,7 @@ export class NostrProvider extends lifecycle.Disposable {
   }
 
   private publishUpdate(update: Uint8Array) {
-    let event: Event = {
+    let bareEvent: UnsignedEvent = {
       kind: NOSTR_CRDT_EVENT_TYPE,
       created_at: Math.floor(Date.now() / 1000),
       tags: [
@@ -57,8 +58,14 @@ export class NostrProvider extends lifecycle.Disposable {
       pubkey: this.publicKey,
     };
 
-    event.id = getEventHash(event);
-    event.sig = signEvent(event, this.privateKey);
+    let unsignedEvent: UnsignedEvent & { id: string } = {
+      ...bareEvent,
+      id: getEventHash(bareEvent),
+    };
+    let event: Event = {
+      ...unsignedEvent,
+      sig: signEvent(unsignedEvent, this.privateKey),
+    };
 
     console.log("publish", event.id);
     const pub = this.nostrRelayPoolClient.publish(event); //, this.relays);
@@ -69,9 +76,6 @@ export class NostrProvider extends lifecycle.Disposable {
     });
     pub.on("failed", (e: any) => {
       console.warn("failed");
-    });
-    pub.on("seen", (e: any) => {
-      console.log("seen");
     });
   }
 

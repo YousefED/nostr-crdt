@@ -51,7 +51,7 @@ export class InMemoryRelayServer {
     });
   }
   async close(): Promise<void> {
-    new Promise((resolve) => this.wss.close(resolve));
+    await new Promise((resolve) => this.wss.close(resolve));
   }
   clear() {
     this.events = [];
