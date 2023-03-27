@@ -126,8 +126,12 @@ export default function NostrStatusBar({
       }
 
       if (e.target.value === "true") {
+        setStatus("loading");
         await client.connect();
+        await nostrProvider!.initialize();
+        setStatus("ok");
       } else {
+        setStatus("disconnected");
         await client.close();
       }
     },
